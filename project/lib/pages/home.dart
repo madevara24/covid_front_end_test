@@ -110,12 +110,36 @@ class _HomeState extends State<Home> {
                   ],
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    HomeTopStatisticCard(topText: 'Confirmed', bottomText: this.confirmed, bottomTextColor: Color(0xfff059ac),),
-                    HomeTopStatisticCard(topText: 'Active', bottomText: this.active, bottomTextColor: Color(0xfff09d59),),
-                    HomeTopStatisticCard(topText: 'Recovered', bottomText: this.recovered, bottomTextColor: Color(0xff89da29),),
-                    HomeTopStatisticCard(topText: 'Deaths', bottomText: this.deaths, bottomTextColor: Color(0xff1b4676),)
+                    HomeTopStatisticCard(
+                      topText: 'Confirmed',
+                      bottomText: this.confirmed,
+                      bottomTextColor: Color(0xfff059ac),
+                      paddings: EdgeInsets.only(top: 12, bottom: 12, right: 18),
+                    ),
+                    HomeTopStatisticCard(
+                      topText: 'Active',
+                      bottomText: this.active,
+                      bottomTextColor: Color(0xfff09d59),
+                      paddings: EdgeInsets.only(top: 12, bottom: 12, right: 18),
+                    ),
+                    HomeTopStatisticCard(
+                      topText: 'Recovered',
+                      bottomText: this.recovered,
+                      bottomTextColor: Color(0xff89da29),
+                      paddings: EdgeInsets.only(top: 12, bottom: 12, right: 18),
+                    ),
+                    HomeTopStatisticCard(
+                      topText: 'Deaths',
+                      bottomText: this.deaths,
+                      bottomTextColor: Color(0xff1b4676),
+                      paddings: EdgeInsets.only(top: 12, bottom: 12, right: 0),
+                    )
+                    // HomeTopStatisticCard(topText: 'Confirmed', bottomText: '10000000', bottomTextColor: Color(0xfff059ac),),
+                    // HomeTopStatisticCard(topText: 'Active', bottomText: '10000000', bottomTextColor: Color(0xfff09d59),),
+                    // HomeTopStatisticCard(topText: 'Recovered', bottomText: '10000000', bottomTextColor: Color(0xff89da29),),
+                    // HomeTopStatisticCard(topText: 'Deaths', bottomText: '10000000', bottomTextColor: Color(0xff1b4676),)
                   ],
                 ),
               ],
@@ -563,12 +587,13 @@ class _HomeMainChartState extends State<HomeMainChart> {
 
 class HomeTopStatisticCard extends StatefulWidget {
   const HomeTopStatisticCard({
-    Key key, this.topText, this.bottomText, this.bottomTextColor
+    Key key, this.topText, this.bottomText, this.bottomTextColor, this.paddings
   }) : super(key: key);
 
   final String topText;
   final String bottomText;
   final Color bottomTextColor;
+  final EdgeInsets paddings;
 
   @override
   _HomeTopStatisticCardState createState() => _HomeTopStatisticCardState();
@@ -578,33 +603,41 @@ class _HomeTopStatisticCardState extends State<HomeTopStatisticCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Expanded(
+      flex: 4,
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              widget.topText,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: "Roboto-Medium",
-                fontSize: 20,
-                color:Color(0xff1b4676),  
-              ),
+        padding: widget.paddings,
+        child: Container(
+          decoration: BoxDecoration(color: Colors.white),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  widget.topText,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: "Roboto-Medium",
+                    fontSize: 20,
+                    color:Color(0xff1b4676),  
+                  ),
+                ),
+                Text(
+                  widget.bottomText,    
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: "Roboto",fontWeight: FontWeight.w700,
+                    fontSize: 48,
+                    color: widget.bottomTextColor,
+                  ),
+                )
+              ],
             ),
-            Text(
-              widget.bottomText,    
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: "Roboto",fontWeight: FontWeight.w700,
-                fontSize: 48,
-                color: widget.bottomTextColor,
-              ),
-            )
-          ],
+          ),
         ),
       ),
     );
   }
 }
+
