@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:covid_front_end/services/covid_data.dart';
+import 'package:covid_front_end/components/home_chart.dart';
+
 
 class Home extends StatefulWidget {
   @override
@@ -14,6 +16,8 @@ class _HomeState extends State<Home> {
   String active = 'null';
   String recovered = 'null';
   String deaths = 'null';
+  int chartConfirmed = 0;
+  List<LineChartBarData> chartData = [];
 
   String dropDownValue = 'World';
 
@@ -142,6 +146,12 @@ class _HomeState extends State<Home> {
                     // HomeTopStatisticCard(topText: 'Deaths', bottomText: '10000000', bottomTextColor: Color(0xff1b4676),)
                   ],
                 ),
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: HomeChart(),
+                  )
+                )
               ],
             ),
           )
@@ -158,6 +168,8 @@ class _HomeState extends State<Home> {
     this.recovered = instance.recovered;
     this.deaths = instance.deaths;
     this.listOfCountries = instance.listOfCountries;
+    this.chartConfirmed = int.parse(instance.confirmed);
+    this.chartData = initChartData([chartConfirmed], 12);
     print('getcoviddata');
     setState(() {
       print('Finished Init');
@@ -173,9 +185,36 @@ class _HomeState extends State<Home> {
     this.recovered = instance.recovered;
     this.deaths = instance.deaths;
     this.listOfCountries = instance.listOfCountries;
+    this.chartConfirmed = int.parse(instance.confirmed);
+    this.chartData = initChartData([chartConfirmed], 12);
     setState(() {
       print('Finished onDropdownChange');
     });
+  }
+
+  // chart functions
+
+  List<LineChartBarData> initChartData(List<int> listOfData, int iteration){
+    List<LineChartBarData> list = [];
+    for (var i = 0; i < listOfData.length; i++) {
+      list.add(intToLineChartBarData(listOfData[i], iteration));
+    }
+    
+    return list;
+  }
+
+  LineChartBarData intToLineChartBarData(int baseData, int iteration){
+    return LineChartBarData(spots: dummyDataToIncrementalFlSpot(baseData, iteration), isCurved: false, barWidth: 2, dotData: FlDotData(show: false,),);
+  }
+
+  List<FlSpot> dummyDataToIncrementalFlSpot(int data, int iteration){
+    List<FlSpot> listOfSpot = [];
+    for (var i = 0; i < iteration; i++) {
+      FlSpot spot = FlSpot(i.toDouble(), (data * i / iteration));
+      print(spot.x.toString() + ';' + spot.y.toString());
+      listOfSpot.add(spot);
+    }
+    return listOfSpot;
   }
 }
 
