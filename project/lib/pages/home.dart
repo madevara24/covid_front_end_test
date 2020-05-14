@@ -169,7 +169,7 @@ class _HomeState extends State<Home> {
     this.deaths = instance.deaths;
     this.listOfCountries = instance.listOfCountries;
     this.chartConfirmed = int.parse(instance.confirmed);
-    this.chartData = initChartData([chartConfirmed], 12);
+    // this.chartData = initChartData([chartConfirmed], 12);
     print('getcoviddata');
     setState(() {
       print('Finished Init');
@@ -186,7 +186,7 @@ class _HomeState extends State<Home> {
     this.deaths = instance.deaths;
     this.listOfCountries = instance.listOfCountries;
     this.chartConfirmed = int.parse(instance.confirmed);
-    this.chartData = initChartData([chartConfirmed], 12);
+    // this.chartData = initChartData([chartConfirmed], 12);
     setState(() {
       print('Finished onDropdownChange');
     });
@@ -194,28 +194,28 @@ class _HomeState extends State<Home> {
 
   // chart functions
 
-  List<LineChartBarData> initChartData(List<int> listOfData, int iteration){
-    List<LineChartBarData> list = [];
-    for (var i = 0; i < listOfData.length; i++) {
-      list.add(intToLineChartBarData(listOfData[i], iteration));
-    }
+//   List<LineChartBarData> initChartData(List<int> listOfData, int iteration){
+//     List<LineChartBarData> list = [];
+//     for (var i = 0; i < listOfData.length; i++) {
+//       list.add(intToLineChartBarData(listOfData[i], iteration));
+//     }
     
-    return list;
-  }
+//     return list;
+//   }
 
-  LineChartBarData intToLineChartBarData(int baseData, int iteration){
-    return LineChartBarData(spots: dummyDataToIncrementalFlSpot(baseData, iteration), isCurved: false, barWidth: 2, dotData: FlDotData(show: false,),);
-  }
+//   LineChartBarData intToLineChartBarData(int baseData, int iteration){
+//     return LineChartBarData(spots: dummyDataToIncrementalFlSpot(baseData, iteration), isCurved: false, barWidth: 2, dotData: FlDotData(show: false,),);
+//   }
 
-  List<FlSpot> dummyDataToIncrementalFlSpot(int data, int iteration){
-    List<FlSpot> listOfSpot = [];
-    for (var i = 0; i < iteration; i++) {
-      FlSpot spot = FlSpot(i.toDouble(), (data * i / iteration));
-      print(spot.x.toString() + ';' + spot.y.toString());
-      listOfSpot.add(spot);
-    }
-    return listOfSpot;
-  }
+//   List<FlSpot> dummyDataToIncrementalFlSpot(int data, int iteration){
+//     List<FlSpot> listOfSpot = [];
+//     for (var i = 0; i < iteration; i++) {
+//       FlSpot spot = FlSpot(i.toDouble(), (data * i / iteration));
+//       print(spot.x.toString() + ';' + spot.y.toString());
+//       listOfSpot.add(spot);
+//     }
+//     return listOfSpot;
+//   }
 }
 
 class HomeMainChart extends StatefulWidget {
